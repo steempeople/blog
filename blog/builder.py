@@ -16,7 +16,7 @@ from utils.system.date import get_uct_time_str
 from blog.message import get_message
 
 
-BLOG_ORGANIZATION = "steemblog"
+BLOG_ORGANIZATION = "steempeople"
 BLOG_AVATAR = "https://avatars0.githubusercontent.com/u/50857551?s=200&v=4"
 BLOG_FAVICON = "https://www.easyicon.net/api/resizeApi.php?id=1185564&size=32"
 
