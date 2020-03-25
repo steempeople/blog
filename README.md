@@ -1,5 +1,7 @@
 ### Introduction
 
+steempeople is based on steemblog. I added some features.
+
 `steemblog` is a blog service that syncs your steem blogs into [https://steemblog.github.io](https://steemblog.github.io) pages. It's built based on steem APIs and [hexo](https://hexo.io) blog framework.
 
 ![Pixabay](https://cdn.pixabay.com/photo/2015/06/01/09/04/blog-793047_1280.jpg)
