@@ -98,7 +98,7 @@ class BlogBuilder(SteemReader):
         date = date_str.replace('T', ' ')
         tags = "\n".join(["- {}".format(tag) for tag in c.get_tags()])
         category = 'cross-posting'
-        if c.get_tags().length > 0:
+        if len(c.get_tags()) > 0:
             category = c.get_tags()[0]
         thumbnail = self._yaml_compatible(c.get_pic_url(), "")
         url = c.get_url()
