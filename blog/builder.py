@@ -86,39 +86,36 @@ class BlogBuilder(SteemReader):
         return default or item
 
     def _write_content(self, post):
-        try:
-            folder = self._get_content_folder()
-            c = SteemComment(comment=post)
+        folder = self._get_content_folder()
+        c = SteemComment(comment=post)
 
-            # retrieve necessary data from steem
-            title = self._yaml_compatible(post.title, "''")
-            permlink = post["permlink"]
-            body = c.get_compatible_markdown()
-            position = self._get_position(body)
-            date_str = post.json()["created"]
-            date = date_str.replace('T', ' ')
-            tags = "\n".join(["- {}".format(tag) for tag in c.get_tags()])
-            category = 'cross-posting'
-            if(c.get_tags().length > 0)
-                category = c.get_tags()[0]
-            thumbnail = self._yaml_compatible(c.get_pic_url(), "")
-            url = c.get_url()
+        # retrieve necessary data from steem
+        title = self._yaml_compatible(post.title, "''")
+        permlink = post["permlink"]
+        body = c.get_compatible_markdown()
+        position = self._get_position(body)
+        date_str = post.json()["created"]
+        date = date_str.replace('T', ' ')
+        tags = "\n".join(["- {}".format(tag) for tag in c.get_tags()])
+        category = 'cross-posting'
+        if c.get_tags().length > 0:
+            category = c.get_tags()[0]
+        thumbnail = self._yaml_compatible(c.get_pic_url(), "")
+        url = c.get_url()
 
-            # build content with template
-            template = get_message("blog", footer=True)
-            content = template.format(title=title, permlink=permlink,
-                                    position=position, date=date,
-                                    tags=tags, category=category,
-                                    thumbnail=thumbnail, body=body, url=url)
+        # build content with template
+        template = get_message("blog", footer=True)
+        content = template.format(title=title, permlink=permlink,
+                                position=position, date=date,
+                                tags=tags, category=category,
+                                thumbnail=thumbnail, body=body, url=url)
 
-            # write into MD files
-            filename = os.path.join(folder, "{}_{}.md".format(date_str.split('T')[0], permlink))
-            with open(filename, "w", encoding="utf-8") as f:
-                f.write(content)
+        # write into MD files
+        filename = os.path.join(folder, "{}_{}.md".format(date_str.split('T')[0], permlink))
+        with open(filename, "w", encoding="utf-8") as f:
+            f.write(content)
 
-            logger.info("Download post [{}] into file {}".format(title, filename))
-        except:
-            logger.info("Pass [{}] into file {}".format(title, filename))
+        logger.info("Download post [{}] into file {}".format(title, filename))
 
     def download(self):
         if len(self.posts) == 0:
