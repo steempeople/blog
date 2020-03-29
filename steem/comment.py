@@ -55,15 +55,19 @@ class SteemComment:
         return SteemMarkdown(body).get_steem_markdown()
 
     def get_tags(self):
-        c = self.get_comment()
-        if c.json_metadata and 'tags' in c.json_metadata:
-            return c.json_metadata['tags']
-        else:
-            self.refresh()
+        try:
             c = self.get_comment()
             if c.json_metadata and 'tags' in c.json_metadata:
                 return c.json_metadata['tags']
-        return []
+            else:
+                self.refresh()
+                c = self.get_comment()
+                if c.json_metadata and 'tags' in c.json_metadata:
+                    return c.json_metadata['tags']
+            return []
+        except:
+            logger.error("Failed when generating pages.\nError: {}".format(c))
+            return []
 
     def has_tag(self, tag):
         return tag in self.get_tags()
